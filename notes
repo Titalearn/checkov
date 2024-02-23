@@ -1,0 +1,46 @@
+Certainly! **Checkov** is a powerful tool for scanning and analyzing **Terraform** infrastructure as code (IaC) files. It helps identify security and compliance issues, misconfigurations, and best practices violations in your Terraform code. Here are some key points about Checkov:
+
+1. **Installation**:
+   - You can install Checkov using **pip** from PyPI: `pip install checkov`.
+
+2. **Basic Usage**:
+   - To scan your Terraform files, navigate to the folder containing your Terraform plan files and run the following command:
+     ```
+     checkov -d /path/to/your/terraform/files
+     ```
+   - This will analyze your Terraform code and provide insights into potential issues.
+
+3. **Scanning Third-Party Terraform Modules**:
+   - Third-party Terraform modules often simplify complex deployments. However, they can sometimes abstract the configuration away from a regular Checkov scan.
+   - To ensure coverage of objects within these modules, you can instruct Checkov to download external modules referenced in your Terraform configuration files:
+     ```
+     checkov -d . --download-external-modules true
+     ```
+   - This command will download external modules into a folder named `.external_modules`.
+
+4. **Experimental Feature**:
+   - If you've already downloaded external modules using Terraform (stored in the `.terraform` folder), you can use the following environment variable to leverage those modules:
+     ```
+     CHECKOV_EXPERIMENTAL_TERRAFORM_MANAGED_MODULES=True checkov -d .
+     ```
+   - This works for scans of the root folder where `terraform init` was executed.
+
+5. **Scanning Private Terraform Modules**:
+   - If you have private modules stored in a repository or a private Terraform registry, you can grant Checkov access by providing access tokens as environment variables.
+   - Variables include `GITHUB_PAT`, `BITBUCKET_TOKEN`, `TF_HOST_NAME`, `TFC_TOKEN`, `TF_REGISTRY_TOKEN`, `BITBUCKET_USERNAME`, and `BITBUCKET_APP_PASSWORD`.
+
+6. **Example**:
+   - To scan a private module in the Terraform Cloud registry:
+     ```
+     export TF_REGISTRY_TOKEN=xxxxxx
+     checkov -d . --download-external-modules true
+     ```
+
+For more details and advanced configurations, refer to the [official Checkov documentation](https://www.checkov.io/).
+
+Source: Conversation with Bing, 2/23/2024
+(1) Terraform Scanning - checkov. https://www.checkov.io/7.Scan%20Examples/Terraform.html.
+(2) Quick Start - checkov. https://www.checkov.io/1.Welcome/Quick%20Start.html.
+(3) Terraform Plan Scanning - checkov. https://www.checkov.io/7.Scan%20Examples/Terraform%20Plan%20Scanning.html.
+(4) checkov. https://www.checkov.io/.
+(5) undefined. https://example.com.
